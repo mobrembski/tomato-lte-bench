@@ -39,8 +39,10 @@ do
     $OPTS \
     $CUST_COLOR \
     -l 0 -v "Mb/s" \
-    DEF:download=$db:download:AVERAGE \
-    DEF:upload=$db:upload:AVERAGE \
+    DEF:downdb=$db:download:AVERAGE \
+    DEF:updb=$db:upload:AVERAGE \
+    CDEF:download=downdb,8000,* \
+    CDEF:upload=updb,8000,* \
     VDEF:minin=upload,MINIMUM \
     VDEF:minout=download,MINIMUM \
     VDEF:maxin=upload,MAXIMUM \
