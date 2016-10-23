@@ -22,7 +22,7 @@ fi
 
 downloaded=`cat /var/log/messages | grep ftp | grep DOWNLOAD | tail -n 1 | grep -o '[0-9.]\+Kbyte/sec'`
 downloaded=${downloaded%Kbyte/sec}
-uploaded=`cat /var/log/messages | grep ftp | grep DOWNLOAD | tail -n 1 | grep -o '[0-9.]\+Kbyte/sec'`
+uploaded=`cat /var/log/messages | grep ftp | grep UPLOAD | tail -n 1 | grep -o '[0-9.]\+Kbyte/sec'`
 uploaded=${uploaded%Kbyte/sec}
 $rrdtool update $db -t download:upload N:$downloaded:$uploaded
 LOGLINE=`date`" Download: "$downloaded"KBps Upload: "$uploaded"KBps"
