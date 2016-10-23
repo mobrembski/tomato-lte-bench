@@ -23,11 +23,19 @@ By default, generated graphs and index.html is stored in /tmp/www/rrd. Please ma
 
 # Description of scripts
 ltemodemquality.sh - Scripts asks modem for radio quality parameters. It will only work with non-hilink modems, because it uses modem diagnostic interface. Currently tested with Huawei E3372s.
+
 ![Result of ltemodemquality](/screenshots/lte-day.png?raw=true "Result of ltemodemquality")
+
 network.sh - Script grabs transferred bytes via provided interfaces and produces a graph showing speed and total transfered data.
+
 ![Result of network](/screenshots/network-eth2-day.png?raw=true "Result of network")
+
 ping.sh - Script checks latency for provided hosts.
+
 ![Result of ping](/screenshots/ping-onet.pl-day.png?raw=true "Result of ping")
+
 speedtest.sh - Script tests internet speed via Speedtest.net network.
+
 ![Result of speedtest](/screenshots/speedtest-day.png?raw=true "Result of speedtest")
+
 ftptest.sh - Script checks logged speed of built-in vsftp FTP Server and plots a graph. You will need a second computer to make some traffic on FTP :-)
