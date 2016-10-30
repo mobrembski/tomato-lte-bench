@@ -17,6 +17,8 @@ PING_HOSTS="facebook.com blog.byku.com.pl onet.pl 192.168.8.1"
 IFACES_SPEED="eth2 vlan2"
 # Periods of time to draw on images. Space separated.
 PERIODS="hour day week"
+# LTE Modem diagnostic interface
+MODEM_IFACE="/dev/ttyUSB0"
 
 # You shouldn't modify those values.
 PLATFORM=`uname -m`
