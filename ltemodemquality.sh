@@ -65,7 +65,8 @@ do
     --width $RRDWIDTH \
     $OPTS \
     $CUST_COLOR \
-    -l 0 -v "dBm" \
+    -v "dBm" \
+    -u 5  \
     "DEF:rssi=$db:rssi:AVERAGE" \
     "DEF:rsrp=$db:rsrp:AVERAGE" \
     "DEF:sinr=$db:sinr:AVERAGE" \
@@ -106,16 +107,16 @@ do
     "GPRINT:rssilast:%2.1lf dBm    \l" \
     "COMMENT:   " \
     "AREA:rsrq#6666FF:RSRQ       " \
-    "GPRINT:rsrqmin:%2.1lf dBm      " \
-    "GPRINT:rsrqmax:%2.1lf dBm     " \
-    "GPRINT:rsrqavg:%2.1lf dBm     " \
-    "GPRINT:rsrqlast:%2.1lf dBm     \l" \
+    "GPRINT:rsrqmin:%2.1lf dB       " \
+    "GPRINT:rsrqmax:%2.1lf dB      " \
+    "GPRINT:rsrqavg:%2.1lf dB      " \
+    "GPRINT:rsrqlast:%2.1lf dB      \l" \
     "COMMENT:   " \
     "AREA:sinr#339900:SINR        " \
-    "GPRINT:sinrmin:%2.1lf dBm     " \
-    "GPRINT:sinrmax:%2.1lf dBm     " \
-    "GPRINT:sinravg:%2.1lf dBm     " \
-    "GPRINT:sinrlast:%2.1lf dBm    " > /dev/null
+    "GPRINT:sinrmin:%2.1lf dB     " \
+    "GPRINT:sinrmax:%2.1lf dB     " \
+    "GPRINT:sinravg:%2.1lf dB     " \
+    "GPRINT:sinrlast:%2.1lf dB    " > /dev/null
 
 done
 
