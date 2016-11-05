@@ -15,10 +15,18 @@ and RRDTool as an database and graphing tool.
 
 # Installation
 To install this scripts, just clone this repository on some writable storage on your router, and add executing bench_all.sh script every 3 minutes to the scheduler.
-Configuration of scripts is stored inside common_rrd.sh. common_rrd.sh contains a lot of comments so it should be easy to understand.
+Configuration of scripts is stored inside common_rrd.sh. common_rrd.sh contains a lot of comments so it should be easy to understood.
 I do not recommend JFFS2 as a storage for your scripts, because currently script are designed to update database every 3 minutes. This could kill fragile router flash chips easily.
 Instead, you should connect an USB FlashDrive to your router, and copy all files every boot to /tmp partition.
 
+You can access your graphs by opening index.html with your browser. By default address is http://192.168.1.1/ext/cgi-bin/index.html
+
+# Technical details
+Script use an undocumented feature in Tomato HTTPD server, which is CGI scripts gateway.
+All scripts placed in /www/ext/cgi-bin with executable permission can be executed by HTTPD server, and result is redirected to user browser.
+This behavior is used to run RRDTool to generate graphs, and then paths of images are returned to the browser in a form of JSON array.
+
+If your firmware doesn't support CGI script, you can still run generate_index.sh script to create index.html along with graphs, and place it somewhere on accessible WWW server.
 By default, generated graphs and index.html is stored in /tmp/www/rrd. Please make sure that your http server is able to serve this folder.
 
 # Description of scripts

@@ -1,4 +1,5 @@
 #!/bin/ash
+# NOTE: All directories and URLs defined here should be without ending slash
 # A directory where script has been putted.
 BASEFOLDER='/tmp/tomato-lte-bench'
 # A directory where RRDs are placed
@@ -6,7 +7,9 @@ DBFOLDER=$BASEFOLDER'/db'
 # A directory where script logs are placed
 LOGFOLDER=$BASEFOLDER'/logs'
 # Folder where images and index.html has been put. Should be accessible by NGINX
-IMGFOLDER='/tmp/www/rrd'
+IMGFOLDER='/www/ext/rrd'
+# Folder where CGI scripts are placed
+CGIFOLDER='/www/ext/cgi-bin'
 # Width of images
 RRDWIDTH='600'
 # Height of images
@@ -19,6 +22,10 @@ IFACES_SPEED="eth2 vlan2"
 PERIODS="hour day week"
 # LTE Modem diagnostic interface
 MODEM_IFACE="/dev/ttyUSB0"
+# HTTP URL where images are placed
+HTTP_HOST="http://192.168.1.1/ext/rrd"
+# HTTP URL where cgi scripts are accessible
+HTTP_HOST_CGI="http://192.168.1.1/ext/cgi-bin"
 
 # You shouldn't modify those values.
 PLATFORM=`uname -m`

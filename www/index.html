@@ -1,0 +1,82 @@
+<html>
+   <head>
+      <meta content = "text/html; charset = ISO-8859-1" http-equiv = "content-type">
+
+      <script type = "application/javascript">
+          var updateInterval;
+          function AutoRefreshChange(chkbox) {
+            if (chkbox.checked) {
+              updateInterval =  setInterval(loadJSON, 10000);
+            } else {
+              clearInterval(updateInterval);
+            }
+          }
+         function loadJSON(){
+            var data_file = "https://lte.byku.com.pl:8443/ext/cgi-bin/getrrd.cgi";
+            var http_request = new XMLHttpRequest();
+            try{
+               // Opera 8.0+, Firefox, Chrome, Safari
+               http_request = new XMLHttpRequest();
+            }catch (e){
+               // Internet Explorer Browsers
+               try{
+                  http_request = new ActiveXObject("Msxml2.XMLHTTP");
+
+               } catch (e) {
+
+                  try {
+                     http_request = new ActiveXObject("Microsoft.XMLHTTP");
+                  } catch (e){
+                     // Something went wrong
+                     alert("Your browser broke!");
+                     return false;
+                  }
+
+               }
+            }
+
+            http_request.onreadystatechange = function() {
+
+               if (http_request.readyState == 4  ) {
+                  // Javascript function JSON.parse to parse JSON data
+                  var jsonObj = JSON.parse(http_request.responseText);
+                  jsonObj.img.sort();
+                  var imagesDiv = document.getElementById('imagesDiv');
+                  while (imagesDiv.hasChildNodes()) {
+                      imagesDiv.removeChild(imagesDiv.lastChild);
+                  }
+
+                var currentdate = new Date();
+                var datetime = "Last Sync: " + currentdate.getDate() + "/"
+                                        + (currentdate.getMonth()+1)  + "/"
+                                        + currentdate.getFullYear() + " @ "
+                                        + currentdate.getHours() + ":"
+                                        + currentdate.getMinutes() + ":"
+                                        + currentdate.getSeconds();
+
+                document.getElementById('LastUpdate').innerHTML = datetime;
+                  for (var i in jsonObj.img) {
+                    if(jsonObj.img[i] != "") {
+			var imgg = document.createElement("img");
+			imgg.src = jsonObj.img[i] + "?"+ currentdate.getTime();
+			imagesDiv.appendChild(imgg);
+                    }
+                  }
+               }
+            }
+
+            http_request.open("GET", data_file, true);
+            http_request.send();
+         }
+      </script>
+   </head>
+
+   <body>
+        <button type = "button" onclick = "loadJSON()">Refresh</button>
+        <input type="checkbox" name="Autorefresh" id="autorefresh" onchange="AutoRefreshChange(this)">Auto refresh</input>
+        <div id="LastUpdate"></div>
+        <div id="imagesDiv"></div>
+   </body>
+
+</html>
+
