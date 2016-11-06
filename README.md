@@ -29,6 +29,9 @@ This behavior is used to run RRDTool to generate graphs, and then paths of image
 If your firmware doesn't support CGI script, you can still run generate_index.sh script to create index.html along with graphs, and place it somewhere on accessible WWW server.
 By default, generated graphs and index.html is stored in /tmp/www/rrd. Please make sure that your http server is able to serve this folder.
 
+ftptest.sh script uses a behavior, that VSFTPD prints speed of every download and upload session to syslog. So the script looks for last occurence of reported speeds in syslog, and put it into RRD database.
+Of course you need a second router or PC, which will make some FTP sessions. There is a simple script designed to make some FTP traffic using busybox. Please have a look at ftp_client.sh file.
+
 # Description of scripts
 ltemodemquality.sh - Scripts asks modem for radio quality parameters. It will only work with non-hilink modems, because it uses modem diagnostic interface. Currently tested with Huawei E3372s.
 
