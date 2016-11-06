@@ -12,7 +12,10 @@
             }
           }
          function loadJSON(){
+            document.getElementById("refreshinprogress").style.display = 'block';
+            var period_select = document.getElementById("periodselect").value;
             var data_file = "https://lte.byku.com.pl:8443/ext/cgi-bin/getrrd.cgi";
+            var full_http_url = data_file + "?period=" + period_select
             var http_request = new XMLHttpRequest();
             try{
                // Opera 8.0+, Firefox, Chrome, Safari
@@ -36,7 +39,6 @@
             }
 
             http_request.onreadystatechange = function() {
-
                if (http_request.readyState == 4  ) {
                   // Javascript function JSON.parse to parse JSON data
                   var jsonObj = JSON.parse(http_request.responseText);
@@ -55,17 +57,18 @@
                                         + currentdate.getSeconds();
 
                 document.getElementById('LastUpdate').innerHTML = datetime;
+                document.getElementById("refreshinprogress").style.display = 'none';
                   for (var i in jsonObj.img) {
                     if(jsonObj.img[i] != "") {
-			var imgg = document.createElement("img");
-			imgg.src = jsonObj.img[i] + "?"+ currentdate.getTime();
-			imagesDiv.appendChild(imgg);
+                      var imgg = document.createElement("img");
+                      imgg.src = jsonObj.img[i] + "?"+ currentdate.getTime();
+                      imagesDiv.appendChild(imgg);
                     }
                   }
                }
             }
 
-            http_request.open("GET", data_file, true);
+            http_request.open("GET", full_http_url, true);
             http_request.send();
          }
       </script>
@@ -73,7 +76,18 @@
 
    <body>
         <button type = "button" onclick = "loadJSON()">Refresh</button>
+	Time period:
+	 <select id="periodselect" onchange = "loadJSON()">
+		<option value="hour">Hourly</option>
+		<option value="day">Daily</option>
+		<option value="week">Weekly</option>
+		<option value="month">Monthly</option>
+		<option value="year">Year</option>
+	</select>
         <input type="checkbox" name="Autorefresh" id="autorefresh" onchange="AutoRefreshChange(this)">Auto refresh</input>
+        <div id="refreshinprogress" style="display: none;">
+            <br>Refresh in progress...Please wait...<br><br>
+        </div>
         <div id="LastUpdate"></div>
         <div id="imagesDiv"></div>
    </body>
