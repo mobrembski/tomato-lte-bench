@@ -5,6 +5,21 @@
 cd `dirname $0`
 . common_rrd.sh
 
+function checkFTPFile {
+	FTP_ANON_ROOT=`nvram get ftp_anonroot`
+
+	if [ $? -eq 1 ]; then
+		echo "Cannot get where ftp anonymous root is"
+		exit 1
+	fi
+
+	if [ ! -e $FTP_ANON_ROOT/testfile ]
+	then
+		echo "Creating 35MB FTP Test file"
+		dd if=/dev/urandom of=$FTP_ANON_ROOT/testfile bs=1M count=35
+	fi
+}
+
 function create {
 	if [ ! -e $db ]
 	then
@@ -22,6 +37,7 @@ function create {
 function update {
 	echo "Testing ftp server test"
 	db=$DBFOLDER$'/ftptest.rrd'
+	checkFTPFile
 	create
 
 	downloaded=`cat /var/log/messages | grep ftp | grep DOWNLOAD | tail -n 1 | grep -o '[0-9.]\+Kbyte/sec'`
